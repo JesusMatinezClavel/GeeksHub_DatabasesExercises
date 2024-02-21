@@ -1,0 +1,44 @@
+CREATE DATABASE mysql_Reto01;
+USE mysql_Reto01;
+CREATE TABLE xusers(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(40),
+    birthdate DATE,
+	email VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+ALTER TABLE xusers
+ADD COLUMN birthdate DATE AFTER name;
+
+CREATE TABLE list(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    user_id INT,
+    number_tasks INT,
+    time_resolve TIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tasks(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    list_id INT,
+    name VARCHAR(40) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    time_to_resolve INT NOT NULL,
+    
+    FOREIGN KEY (list_id) REFERENCES list_tasks(id)
+);
+
+CREATE TABLE list_tasks(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    task_id INT,
+    list_id INT
+);
+
+
+ALTER TABLE list_tasks
+ADD FOREIGN KEY (list_id) REFERENCES list(id)
