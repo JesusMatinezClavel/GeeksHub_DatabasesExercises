@@ -1,0 +1,1 @@
+![Diagram Reto06](./img/Reto06.png)

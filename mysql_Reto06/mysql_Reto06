@@ -1,0 +1,47 @@
+
+CREATE DATABASE mysql_Reto06;
+USE mysql_Reto06;
+
+CREATE TABLE users(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reserves (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    flight_number INT,
+    flight_date TIMESTAMP,
+    flight_gate VARCHAR(100),
+    flight_origin VARCHAR(100),
+    flight_destination VARCHAR(100),
+    Seat_number INT,
+    
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE flights (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    reserve_id INT,
+	flight_origin VARCHAR(100),
+	flight_destination VARCHAR(100),
+	flight_number INT,
+    seats INT,
+    
+    FOREIGN KEY (reserve_id) REFERENCES reserves(id)
+);
+
+CREATE TABLE comments (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    reserve_id INT,
+    flight_number INT,
+    comments VARCHAR(200),
+    
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (reserve_id) REFERENCES reserves(id)
+);
